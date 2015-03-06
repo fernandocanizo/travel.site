@@ -31,6 +31,9 @@ app.set('port', process.env.TRAVEL_SITE_PORT || tsDefaults.port);
 // routes
 ////////////////////////////////////////////////////////////////////////////////
 
+app.use(express.static(__dirname + '/public'));
+
+
 app.get('/', function (req, res) {
 	res.render("home");
 });
