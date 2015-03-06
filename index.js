@@ -14,6 +14,16 @@ var express = require('express');
 
 var app = express();
 
+////////////////////////////////////////////////////////////////////////////////
+// configuration
+////////////////////////////////////////////////////////////////////////////////
+
+// set up handlebars view engine
+var handlebars = require('express-handlebars');
+
+app.engine('handlebars', handlebars({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
+
 app.set('port', process.env.TRAVEL_SITE_PORT || tsDefaults.port);
 
 
@@ -22,30 +32,26 @@ app.set('port', process.env.TRAVEL_SITE_PORT || tsDefaults.port);
 ////////////////////////////////////////////////////////////////////////////////
 
 app.get('/', function (req, res) {
-	res.type("text/plain");
-	res.send("Home");
+	res.render("home");
 });
 
 
 app.get('/about', function (req, res) {
-	res.type("text/plain");
-	res.send("About");
+	res.render("about");
 });
 
 
 app.use(function (req, res) {
 	// custom 404 page
-	res.type("text/plain");
 	res.status(404);
-	res.send("404 - Page not found");
+	res.render("404");
 });
 
 
 app.use(function (req, res) {
 	// custom 500 page
-	res.type("text/plain");
 	res.status(500);
-	res.send("500 - Internal server error");
+	res.render("500");
 });
 
 
