@@ -1,0 +1,11 @@
+{
+  "name": "travel.site",
+  "version": "0.0.1",
+  "description": "Sample travel site",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Fernando L. Canizo - http://flc.muriandre.com/",
+  "license": "MIT"
+}
