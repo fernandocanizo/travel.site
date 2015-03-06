@@ -17,16 +17,32 @@ var app = express();
 app.set('port', process.env.TRAVEL_SITE_PORT || tsDefaults.port);
 
 
-// custom 404 page
+////////////////////////////////////////////////////////////////////////////////
+// routes
+////////////////////////////////////////////////////////////////////////////////
+
+app.get('/', function (req, res) {
+	res.type("text/plain");
+	res.send("Home");
+});
+
+
+app.get('/about', function (req, res) {
+	res.type("text/plain");
+	res.send("About");
+});
+
+
 app.use(function (req, res) {
+	// custom 404 page
 	res.type("text/plain");
 	res.status(404);
 	res.send("404 - Page not found");
 });
 
 
-// custom 500 page
 app.use(function (req, res) {
+	// custom 500 page
 	res.type("text/plain");
 	res.status(500);
 	res.send("500 - Internal server error");
