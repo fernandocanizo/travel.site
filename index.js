@@ -9,6 +9,14 @@ var tsDefaults = {
 	port: 3000
 };
 
+tsDefaults.fortunes = [
+	// TODO make this dynamic using system fortune command
+	"Conquer your fears or they will conquer you.",
+	"Rivers need springs.",
+	"Do not fear what you don't know.",
+	"You will have a pleasant surprise.",
+	"Whenever possible, keep it simple.",
+];
 
 var express = require('express');
 
@@ -40,7 +48,8 @@ app.get('/', function (req, res) {
 
 
 app.get('/about', function (req, res) {
-	res.render("about");
+	var randomFortune = tsDefaults.fortunes[Math.floor(Math.random() * tsDefaults.fortunes.length)];
+	res.render("about", {fortune: randomFortune});
 });
 
 
