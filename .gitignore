@@ -1,2 +1,5 @@
 # environment configuration
 dev.sh
+
+# test with Zombie.js are not working. I couldn't find the issue
+qa
