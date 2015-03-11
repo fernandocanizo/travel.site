@@ -6,7 +6,7 @@
 // hard coded defaults for this application
 // some of them may be overriden with environment variables
 var tsDefaults = {
-	port: 3000
+	port: 80
 };
 
 
@@ -24,7 +24,7 @@ var handlebars = require('express-handlebars');
 app.engine('handlebars', handlebars({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
-app.set('port', process.env.TRAVEL_SITE_PORT || tsDefaults.port);
+app.set('port', process.env.PORT || tsDefaults.port);
 
 
 ////////////////////////////////////////////////////////////////////////////////
