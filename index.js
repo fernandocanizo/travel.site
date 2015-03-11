@@ -18,6 +18,9 @@ var app = express();
 // configuration
 ////////////////////////////////////////////////////////////////////////////////
 
+// no need to provide crackers with extra info
+app.disable('x-powered-by');
+
 // set up handlebars view engine
 var handlebars = require('express-handlebars');
 
@@ -69,15 +72,17 @@ app.get('/tours/request-group-rate', function (req, res) {
 
 app.use(function (req, res) {
 	// custom 404 page
-	res.status(404);
-	res.render("404");
+	res.status(404)
+		.render("404");
 });
 
 
-app.use(function (req, res) {
-	// custom 500 page
-	res.status(500);
-	res.render("500");
+app.use(function (err, req, res, next) {
+	// keep this one *last*
+	// next is needed by Express to recognize this as an error handler
+	console.error(err.stack);
+	res.status(500)
+		.render("500");
 });
 
 
