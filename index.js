@@ -47,7 +47,7 @@ app.get('/about', function (req, res) {
 	var fortune = require('./lib/get.fortune');
 
 	fortune.get(function (fortune) {
-		res.render("about", {fortune: fortune});
+		res.render("about", {fortune: fortune, pageTestScript: '/qa/test.about.js'});
 	});
 });
 

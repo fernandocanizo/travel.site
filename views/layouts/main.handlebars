@@ -2,6 +2,11 @@
 <html>
 	<head>
 		<title>Travel Site</title>
+		{{#if showTests}}
+		<link rel="stylesheet" href="vendor/mocha/mocha.css">
+		{{/if}}
+
+		<script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
 	</head>
 	<body>
 		<header>
@@ -9,5 +14,28 @@
 		</header>
 
 		{{{body}}}
+
+
+		{{#if showTests}}
+		<div id="mocha"></div>
+		<script src="vendor/mocha/mocha.js"></script>
+		<script src="vendor/chai/chai.js"></script>
+
+		<script>
+mocha.ui("tdd");
+var assert = chai.assert;
+		</script>
+
+		<script src="qa/tests.globals.js"></script>
+
+			{{#if pageTestScript}}
+		<script src="{{pageTestScript}}"></script>
+			{{/if}}
+
+		<script>
+mocha.run();
+		</script>
+
+	{{/if}}
 	</body>
 </html>
