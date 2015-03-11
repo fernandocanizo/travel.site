@@ -33,6 +33,10 @@ app.set('port', process.env.PORT || tsDefaults.port);
 
 app.use(express.static(__dirname + '/public'));
 
+app.use(function (req, res, next) {
+	res.locals.showTests = app.get('env') === 'development' && req.query.test;
+	next();
+});
 
 app.get('/', function (req, res) {
 	res.render("home");
