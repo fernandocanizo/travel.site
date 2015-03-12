@@ -31,7 +31,7 @@ app.set('port', process.env.PORT || tsDefaults.port);
 
 
 ////////////////////////////////////////////////////////////////////////////////
-// routes
+// middleware
 ////////////////////////////////////////////////////////////////////////////////
 
 app.use(express.static(__dirname + '/public'));
@@ -41,6 +41,21 @@ app.use(function (req, res, next) {
 	next();
 });
 
+app.use(function (req, res, next) {
+	var weather = require('./lib/weather');
+
+	if(! res.locals.partials) {
+		res.locals.partials = {};
+	}
+
+	res.locals.partials.weather = weather.get();
+
+	next();
+});
+
+////////////////////////////////////////////////////////////////////////////////
+// routes
+////////////////////////////////////////////////////////////////////////////////
 app.get('/', function (req, res) {
 	res.render("home");
 });
