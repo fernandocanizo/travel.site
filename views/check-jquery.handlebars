@@ -1,0 +1,14 @@
+{{#section 'head'}}
+	<meta name="robots" content="noindex">
+{{/section}}
+
+<h1>Test jquery and sections</h1>
+<p>Testing sections helper for handlebars.</p>
+
+{{#section 'jquery'}}
+	<script>
+		$(document).ready(function () {
+			$('h1').html('jQuery is working fine within sections');
+		});
+	</script>
+{{/section}}

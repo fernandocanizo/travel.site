@@ -24,7 +24,20 @@ app.disable('x-powered-by');
 // set up handlebars view engine
 var handlebars = require('express-handlebars');
 
-app.engine('handlebars', handlebars({defaultLayout: 'main'}));
+app.engine('handlebars', handlebars({
+	defaultLayout: 'main',
+	helpers: {
+		section: function (name, options) {
+			if(! this._sections) {
+				this._sections = {};
+			}
+
+			this._sections[name] = options.fn(this);
+			return null;
+		}
+	}
+}));
+
 app.set('view engine', 'handlebars');
 
 app.set('port', process.env.PORT || tsDefaults.port);
@@ -60,6 +73,9 @@ app.get('/', function (req, res) {
 	res.render("home");
 });
 
+app.get('/check-jquery', function (req, res) {
+	res.render('check-jquery');
+});
 
 app.get('/about', function (req, res) {
 	var fortune = require('./lib/get.fortune');
