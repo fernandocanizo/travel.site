@@ -66,6 +66,9 @@ app.use(function (req, res, next) {
 	next();
 });
 
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded());
+
 ////////////////////////////////////////////////////////////////////////////////
 // routes
 ////////////////////////////////////////////////////////////////////////////////
@@ -100,6 +103,24 @@ app.get('/tours/request-group-rate', function (req, res) {
 	res.render('tours/request-group-rate');
 });
 
+
+app.get('/newsletter', function (req, res) {
+	// TODO CSRF
+	res.render('newsletter', {csrf: "Cross Site Request Forgery token goes here"});
+});
+
+
+app.post('/process', function (req, res) {
+	if(req.xhr || 'json' === req.accepts('json,html')) {
+		res.json({
+			status: true,
+			statusMessage: "You're now registered to our newsletter",
+		});
+
+	} else {
+		res.redirect(303, '/thank-you');
+	}
+});
 
 app.use(function (req, res) {
 	// custom 404 page
