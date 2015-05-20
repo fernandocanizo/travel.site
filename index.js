@@ -12,6 +12,7 @@ var tsDefaults = {
 
 var credentials = require('./credentials.js');
 var express = require('express');
+var http = require('http');
 
 var app = express();
 
@@ -90,6 +91,15 @@ app.use(function (req, res, next) {
 	res.locals.flash = req.session.flash;
 	delete req.session.flash;
 	next();
+});
+
+
+// log which worker answered a request when started in clustered mode
+app.use(function (req, res, next) {
+	var cluster = require('cluster');
+	if(cluster.isWorker) {
+		console.log('Worker %d received request', cluster.worker.id);
+	}
 });
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -243,6 +253,17 @@ app.use(function (err, req, res, next) {
 });
 
 
-app.listen(app.get('port'), function () {
-	console.log("Express started in " + app.get('env') + " mode. Listening on http://localhost:" + app.get('port'));
-});
+function startServer() {
+	http.createServer(app).listen(app.get('port'), function () {
+		console.log("Express started in " + app.get('env') + " mode. Listening on http://localhost:" + app.get('port'));
+	});
+}
+
+if(require.main === module) {
+	console.log("application run directly, starting app server.");
+	startServer();
+
+} else {
+	console.log("application imported as module via require, export function to create server.");
+	module.exports = startServer;
+}
